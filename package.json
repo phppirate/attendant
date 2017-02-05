@@ -1,0 +1,20 @@
+{
+  "name": "attendant",
+  "version": "0.0.1",
+  "description": "Laravel Valet GUI",
+  "main": "main.js",
+  "repository": {},
+  "author": "Sam Podlogar",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "1.4.15",
+    "laravel-mix": "0.6.3",
+    "vue": "2.1.10"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules",
+    "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules",
+    "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  }
+}

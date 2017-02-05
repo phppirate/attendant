@@ -1,0 +1,49 @@
+*{
+	box-sizing: border-box;
+	font-family: "Avenir Next";
+	font-size: 20px;
+	cursor: default;
+}
+html, body{
+	padding: 0;
+	margin: 0;
+}
+.splitter{
+	display: flex;
+	height: calc(100vh - 65px);
+}
+.section1{
+	min-width: 256px;
+	border-right: 1px solid #E9E9E9;
+}
+.section2{
+	flex: 1;
+}
+
+
+.btn{
+	border: 1px solid #E9E9E9;
+	color: #999;
+	padding: 10px 20px;
+	background: #fff;
+	transition: box-shadow .2s ease-in-out;
+}
+.btn:hover{
+	box-shadow: 0px 0px 0px 2px #E9E9E9;
+}
+
+.btn.is-green{
+	border: 1px solid #7ED321;
+	color: #7ED321;
+}
+.btn.is-green:hover{
+	box-shadow: 0px 0px 0px 2px #7ED321;
+}
+
+.btn.is-red{
+	border: 1px solid #FB503B;
+	color: #FB503B;
+}
+.btn.is-red:hover{
+	box-shadow: 0px 0px 0px 2px #FB503B;
+}

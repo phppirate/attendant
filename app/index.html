@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Attendant</title>
+	<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+	<div id="app">
+		<status-bar></status-bar>
+		<div class="splitter">
+			<div class="section1">
+				<list-header>Valet Sites</list-header>
+				<site-list></site-list>
+			</div>
+			<div class="section2">
+				<site-details></site-details>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		let dirName = __dirname;
+		let eRequire = require;
+		let fs = require('fs');
+		console.log(fs);
+
+		let basePath = dirName.split('/');
+		basePath = "/" + basePath[1] + "/" + basePath[2] + "/.valet";
+
+		let config = JSON.parse(fs.readFileSync(basePath + "/config.json"));
+		console.table(config);
+
+		fs.watchFile(basePath + "/config.json", () => {
+			config = JSON.parse(fs.readFileSync(basePath + "/config.json"));
+			console.table(config);
+		});
+		// console.log(fs.walk(config.paths));
+	</script>
+	<script src="js/app.js"></script>
+</body>
+</html>
