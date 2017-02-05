@@ -459,14 +459,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 
 
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+window.app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+	el: "#app",
+	data: {
+		config: {},
+		siteList: [],
+		activeSite: null
+	},
 	components: {
 		'status-bar': __webpack_require__(19),
 		'list-header': __webpack_require__(3),
 		'site-list': __webpack_require__(17),
 		'site-details': __webpack_require__(16)
+	},
+	methods: {
+		activateSite: function activateSite(site) {
+			console.log('Activate');
+			this.activeSite = site;
+		},
+		loadBase: function loadBase() {
+			console.log('Reloading Base');
+			this.config = config;
+			this.siteList = sites;
+		}
+	},
+	mounted: function mounted() {
+		console.log(sites);
+		this.loadBase();
+
+		this.$on('reload-base', this.loadBase);
 	}
-}).$mount('#app');
+});
 
 /***/ }),
 /* 5 */
@@ -508,14 +531,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
 	data: function data() {
 		return {};
 	},
 
-	props: [],
-	methods: {},
+	props: ['activeSite'],
+	methods: {
+		formatedName: function formatedName() {
+			var formated = this.activeSite.site;
+			formated = formated.split('.');
+			delete formated[formated.length - 1];
+			formated = formated.join('').split('-').map(function (string) {
+				return string[0] ? string[0].toUpperCase() + string.substr(1) : string;
+			}).join(' ');
+			return formated;
+		},
+		openSite: function openSite() {
+			console.log('Opening');
+			shell.openExternal('http://' + this.activeSite.site);
+		}
+	},
 	components: {
 		"list-header": __webpack_require__(3)
 	}
@@ -534,16 +572,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
 	data: function data() {
 		return {};
 	},
 
-	props: [],
+	props: ['siteList', 'activeSite'],
 	methods: {},
 	components: {
 		'item': __webpack_require__(18)
+	},
+	mounted: function mounted() {
+		console.log('SiteList', this.siteList);
 	}
 };
 
@@ -672,7 +716,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, "\n.site-list{\n\tpadding: 0px 10px;\n}\n", ""]);
+exports.push([module.i, "\n.site-list{\n\tpadding: 0px 10px;\n\theight: calc(100% - 50px);\n\toverflow-y: scroll;\n}\n", ""]);
 
 // exports
 
@@ -1020,8 +1064,13 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    class: ['site', _vm.active ? 'active' : '']
+  return _c('a', {
+    class: ['site', _vm.active ? 'active' : ''],
+    on: {
+      "click": function($event) {
+        _vm.$emit('click')
+      }
+    }
   }, [_c('div', {
     staticClass: "hover-item"
   }, [_vm._t("default")], 2), _vm._v(" "), _c('div', {
@@ -1058,22 +1107,21 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.activeSite) ? _c('div', {
     staticClass: "site-details"
-  }, [_c('list-header', [_vm._v("Hidalgo 365")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }, [_c('list-header', [_vm._v(_vm._s(_vm.formatedName()))]), _vm._v(" "), _c('div', {
     staticClass: "content"
-  }, [_c('div', [_vm._v("Driver: LaravelValetDriver")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }, [_c('div', [_vm._v("Path: " + _vm._s(_vm.activeSite.path))]), _vm._v(" "), _c('div', [_vm._v("Driver: LaravelValetDriver")])]), _vm._v(" "), _c('div', {
     staticClass: "footer"
   }, [_c('button', {
-    staticClass: "btn"
+    staticClass: "btn",
+    on: {
+      "click": _vm.openSite
+    }
   }, [_vm._v("Open")]), _vm._v(" "), _c('button', {
     staticClass: "btn is-green"
-  }, [_vm._v("Secure")])])
-}]}
+  }, [_vm._v("Secure")])])], 1) : _vm._e()
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -1116,13 +1164,18 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return (_vm.siteList) ? _c('div', {
     staticClass: "site-list"
-  }, [_c('item', {
-    attrs: {
-      "active": true
-    }
-  }, [_vm._v("hidalgo365.dev")]), _vm._v(" "), _c('item', [_vm._v("policycontroller.dev")])], 1)
+  }, _vm._l((_vm.siteList), function(item) {
+    return _c('item', {
+      class: _vm.activeSite == item ? 'active' : '',
+      on: {
+        "click": function($event) {
+          _vm.$emit('activate', item)
+        }
+      }
+    }, [_vm._v(_vm._s(item.site))])
+  })) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

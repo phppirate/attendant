@@ -1,10 +1,33 @@
 import Vue from 'vue';
 
-new Vue({
+window.app = new Vue({
+	el: "#app",
+	data: {
+		config: {},
+		siteList: [],
+		activeSite: null
+	},
 	components: {
 		'status-bar': require('./components/StatusBar'),
 		'list-header': require('./components/ListHeader'),
 		'site-list': require('./components/SiteList'),
 		'site-details': require('./components/SiteDetails'),
+	},
+	methods: {
+		activateSite(site){
+			console.log('Activate');
+			this.activeSite = site;
+		},
+		loadBase(){
+			console.log('Reloading Base');
+			this.config = config;
+			this.siteList = sites;
+		}
+	},
+	mounted(){
+		console.log(sites);
+		this.loadBase();
+
+		this.$on('reload-base', this.loadBase);
 	}
-}).$mount('#app');
+});

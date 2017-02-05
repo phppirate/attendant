@@ -1,8 +1,8 @@
 <template>
-	<div :class="['site', active ? 'active' : '']">
+	<a @click="$emit('click')" :class="['site', active ? 'active' : '']">
 		<div class="hover-item"><slot></slot></div>
 		<div class="flex-1"></div>
-	</div>
+	</a>
 </template>
 
 <script>

@@ -11,32 +11,19 @@
 		<div class="splitter">
 			<div class="section1">
 				<list-header>Valet Sites</list-header>
-				<site-list></site-list>
+				<site-list
+					:site-list="siteList"
+					:active-site="activeSite"
+					@activate="activateSite"
+					></site-list>
 			</div>
 			<div class="section2">
-				<site-details></site-details>
+				<site-details :active-site="activeSite"></site-details>
 			</div>
 		</div>
 	</div>
 
-	<script>
-		let dirName = __dirname;
-		let eRequire = require;
-		let fs = require('fs');
-		console.log(fs);
-
-		let basePath = dirName.split('/');
-		basePath = "/" + basePath[1] + "/" + basePath[2] + "/.valet";
-
-		let config = JSON.parse(fs.readFileSync(basePath + "/config.json"));
-		console.table(config);
-
-		fs.watchFile(basePath + "/config.json", () => {
-			config = JSON.parse(fs.readFileSync(basePath + "/config.json"));
-			console.table(config);
-		});
-		// console.log(fs.walk(config.paths));
-	</script>
+	<script src="js/base.js"></script>
 	<script src="js/app.js"></script>
 </body>
 </html>
