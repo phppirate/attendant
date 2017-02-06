@@ -54,3 +54,11 @@ function valet_which(path){
 		});
 	});
 }
+
+function valet_restart(){
+	return new Promise(function(resolve, reject) {  
+		exec('valet restart', function(error, stdout, stderr) {
+			resolve(stdout);
+		});
+	});
+}

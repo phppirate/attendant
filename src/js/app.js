@@ -5,7 +5,7 @@ window.app = new Vue({
 	data: {
 		config: {},
 		siteList: [],
-		activeSite: null
+		activeSite: null,
 	},
 	components: {
 		'status-bar': require('./components/StatusBar'),

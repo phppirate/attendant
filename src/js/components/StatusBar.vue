@@ -9,8 +9,9 @@
 		<div class="section">
 			{{ version }}
 		</div>
-		<button class="section">
-			Restart
+		<button class="section" ref="restartBtn" @click="restartValet">
+			<span v-if="!restarting">Restart</span>
+			<span v-else>Restarting</span>
 		</button>
 	</div>
 </template>
@@ -18,10 +19,21 @@
 <script>
 	export default {
 		data(){
-			return {};
+			return {
+				restarting: false
+			};
 		},
 		props: ['version'],
-		methods: {}
+		methods: {
+			restartValet(){
+				this.restarting = true;
+				valet_restart()
+					.then(r => {
+						console.log(r);
+						this.restarting = false;
+					});
+			}
+		}
 	}
 </script>
 
