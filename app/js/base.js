@@ -123,3 +123,12 @@ function valet_running(){
 	console.log(process.env.HOME + "/.valet/valet.sock");
 	return fs.existsSync(process.env.HOME + "/.valet/valet.sock") ? true : false;
 }
+
+function open_sublime(path){
+	return new Promise(function(resolve, reject) {  
+		exec('subl .', {cwd: path}, function(error, stdout, stderr) {
+			console.log(error);
+			resolve(stdout);
+		});
+	});
+}

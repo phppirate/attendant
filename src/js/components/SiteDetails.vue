@@ -7,12 +7,17 @@
 		</div>
 
 		<div class="footer">
-			<button class="btn" @click="openSite">Open</button>
-			<button class="btn" @click="openFolder">Reveal</button>
-			<button class="btn is-red" @click="forgetOrUnlink()">
-				<span v-if="isLinked()">Un-link</span>
-				<span v-if="isParked()">Forget</span>
-			</button>
+			<div>
+				<button class="btn" @click="openSite">Open</button>
+				<button class="btn" @click="openFolder">Reveal</button>
+				<button class="btn is-red" @click="forgetOrUnlink()">
+					<span v-if="isLinked()">Un-link</span>
+					<span v-if="isParked()">Forget</span>
+				</button>
+			</div>
+			<div style="margin-top: 10px;">
+				<button class="btn is-green" @click="openInSublime">Open Sublime Text</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -76,6 +81,9 @@
 							window.location.reload();
 						});
 				}
+			},
+			openInSublime(){
+				open_sublime(this.activeSite.path);
 			}
 		},
 		components: {

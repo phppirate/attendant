@@ -552,6 +552,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
 	data: function data() {
@@ -613,6 +618,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					window.location.reload();
 				});
 			}
+		},
+		openInSublime: function openInSublime() {
+			open_sublime(this.activeSite.path);
 		}
 	},
 	components: {
@@ -1240,7 +1248,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "content"
   }, [_c('div', [_vm._v("Path: " + _vm._s(_vm.activeSite.path))]), _vm._v(" "), (_vm.getDriver(_vm.activeSite.path)) ? _c('div', [_vm._v("Driver: " + _vm._s(_vm.driver))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "footer"
-  }, [_c('button', {
+  }, [_c('div', [_c('button', {
     staticClass: "btn",
     on: {
       "click": _vm.openSite
@@ -1257,7 +1265,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.forgetOrUnlink()
       }
     }
-  }, [(_vm.isLinked()) ? _c('span', [_vm._v("Un-link")]) : _vm._e(), _vm._v(" "), (_vm.isParked()) ? _c('span', [_vm._v("Forget")]) : _vm._e()])])], 1) : _vm._e()
+  }, [(_vm.isLinked()) ? _c('span', [_vm._v("Un-link")]) : _vm._e(), _vm._v(" "), (_vm.isParked()) ? _c('span', [_vm._v("Forget")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "margin-top": "10px"
+    }
+  }, [_c('button', {
+    staticClass: "btn is-green",
+    on: {
+      "click": _vm.openInSublime
+    }
+  }, [_vm._v("Open Sublime Text")])])])], 1) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
