@@ -67,6 +67,24 @@ function valet_restart(){
 	});
 }
 
+function valet_stop(){
+	return new Promise(function(resolve, reject) {  
+		exec('sudo /usr/local/bin/valet stop', {cwd: process.env.HOME}, function(error, stdout, stderr) {
+			console.log(error);
+			resolve(stdout);
+		});
+	});
+}
+
+function valet_start(){
+	return new Promise(function(resolve, reject) {  
+		exec('sudo /usr/local/bin/valet start', {cwd: process.env.HOME}, function(error, stdout, stderr) {
+			console.log(error);
+			resolve(stdout);
+		});
+	});
+}
+
 function valet_running(){
 	console.log(process.env.HOME + "/.valet/valet.sock");
 	return fs.existsSync(process.env.HOME + "/.valet/valet.sock") ? true : false;

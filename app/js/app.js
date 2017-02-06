@@ -662,11 +662,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
 	data: function data() {
 		return {
-			restarting: false,
+			starting: false,
+			stopping: false,
 			running: false
 		};
 	},
@@ -683,6 +696,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this.restarting = false;
 				_this.getRunning();
 			});
+		},
+		toggleValet: function toggleValet() {
+			var _this2 = this;
+
+			if (this.running) {
+				this.stopping = true;
+				valet_stop().then(function () {
+					_this2.stopping = false;
+					_this2.running = false;
+				});
+			} else {
+				this.starting = true;
+				valet_start().then(function () {
+					_this2.starting = false;
+					_this2.running = true;
+				});
+			}
 		},
 		getRunning: function getRunning() {
 			this.running = valet_running();
@@ -1198,7 +1228,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.restartValet
     }
-  }, [(!_vm.restarting) ? _c('span', [_vm._v("Restart")]) : _c('span', [_vm._v("Restarting")])])])
+  }, [(!_vm.starting) ? _c('span', [_vm._v("Restart")]) : _c('span', [_vm._v("Restarting")])]), _vm._v(" "), _c('button', {
+    ref: "stopStartBtn",
+    staticClass: "section",
+    on: {
+      "click": _vm.toggleValet
+    }
+  }, [(!_vm.starting && !_vm.stopping) ? _c('div', [(!_vm.running) ? _c('span', [_vm._v("Start")]) : _c('span', [_vm._v("Stop")])]) : _vm._e(), _vm._v(" "), (_vm.starting) ? _c('div', [_c('span', [_vm._v("Starting")])]) : _vm._e(), _vm._v(" "), (_vm.stopping) ? _c('div', [_c('span', [_vm._v("Stopping")])]) : _vm._e()])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

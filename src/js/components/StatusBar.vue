@@ -15,8 +15,20 @@
 			{{ version }}
 		</div>
 		<button class="section" ref="restartBtn" @click="restartValet">
-			<span v-if="!restarting">Restart</span>
+			<span v-if="!starting">Restart</span>
 			<span v-else>Restarting</span>
+		</button>
+		<button class="section" ref="stopStartBtn" @click="toggleValet">
+			<div v-if="!starting && !stopping">
+				<span v-if="!running">Start</span>
+				<span v-else>Stop</span>
+			</div>
+			<div v-if="starting">
+				<span>Starting</span>
+			</div>
+			<div v-if="stopping">
+				<span>Stopping</span>
+			</div>
 		</button>
 	</div>
 </template>
@@ -25,7 +37,8 @@
 	export default {
 		data(){
 			return {
-				restarting: false,
+				starting: false,
+				stopping: false,
 				running: false
 			};
 		},
@@ -40,6 +53,21 @@
 						this.restarting = false;
 						this.getRunning();
 					});
+			},
+			toggleValet(){
+				if(this.running){
+					this.stopping = true;
+					valet_stop().then(() => {
+						this.stopping = false;
+						this.running = false;
+					});
+				} else {
+					this.starting = true;
+					valet_start().then(() => {
+						this.starting = false;
+						this.running = true;
+					});
+				}
 			},
 			getRunning(){
 				this.running = valet_running();
