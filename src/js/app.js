@@ -19,15 +19,11 @@ window.app = new Vue({
 			this.activeSite = site;
 		},
 		loadBase(){
-			console.log('Reloading Base');
 			this.config = config;
 			this.siteList = sites;
 		}
 	},
 	mounted(){
-		console.log(sites);
-		this.loadBase();
-
 		this.$on('reload-base', this.loadBase);
 	}
 });

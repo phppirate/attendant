@@ -1,4 +1,6 @@
 let electron = require('electron');
+let {shell, Menu} = electron;
+let exec = require('child_process').exec;
 let app = electron.app;
 let BrowserWindow = electron.BrowserWindow;
 let mainWindow;
@@ -9,10 +11,11 @@ function init(){
 
 function createMainWindow(){
 	mainWindow = new BrowserWindow({
-		width: 570,
+		width: 700,
 		height: 580
 	});
 	mainWindow.loadURL('file://' + __dirname + "/app/index.html");
 }
+
 
 app.on('ready', init);

@@ -6,8 +6,8 @@
 	<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-	<div id="app">
-		<status-bar></status-bar>
+	<div id="app" v-if="config">
+		<status-bar :version="config.version"></status-bar>
 		<div class="splitter">
 			<div class="section1">
 				<list-header>Valet Sites</list-header>

@@ -7,7 +7,7 @@
 			15 Sites
 		</div>
 		<div class="section">
-			Valet v2.4
+			{{ version }}
 		</div>
 		<button class="section">
 			Restart
@@ -20,7 +20,7 @@
 		data(){
 			return {};
 		},
-		props: [],
+		props: ['version'],
 		methods: {}
 	}
 </script>

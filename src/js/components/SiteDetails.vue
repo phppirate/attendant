@@ -3,11 +3,12 @@
 		<list-header>{{ formatedName() }}</list-header>
 		<div class="content">
 			<div>Path: {{ activeSite.path }}</div>
-			<div>Driver: LaravelValetDriver</div>
+			<div v-if="getDriver(activeSite.path)">Driver: {{ driver }}</div>
 		</div>
 
 		<div class="footer">
 			<button class="btn" @click="openSite">Open</button>
+			<button class="btn" @click="openFolder">Reveal</button>
 			<button class="btn is-green">Secure</button>
 		</div>
 	</div>
@@ -16,10 +17,19 @@
 <script>
 	export default {
 		data(){
-			return {};
+			return {
+				driver: null
+			};
 		},
 		props: ['activeSite'],
 		methods: {
+			getDriver(path){
+				valet_which(path)
+					.then((r) => {
+						this.driver = r;
+					});
+				return true;
+			},
 			formatedName(){
 				let formated = this.activeSite.site;
 				formated = formated.split('.');
@@ -32,6 +42,10 @@
 			openSite(){
 				console.log('Opening');
 				shell.openExternal('http://' + this.activeSite.site);
+			},
+			openFolder(){
+				console.log('Opening');
+				shell.openItem(this.activeSite.path);
 			}
 		},
 		components: {

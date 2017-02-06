@@ -478,15 +478,11 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 			this.activeSite = site;
 		},
 		loadBase: function loadBase() {
-			console.log('Reloading Base');
 			this.config = config;
 			this.siteList = sites;
 		}
 	},
 	mounted: function mounted() {
-		console.log(sites);
-		this.loadBase();
-
 		this.$on('reload-base', this.loadBase);
 	}
 });
@@ -532,14 +528,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
 	data: function data() {
-		return {};
+		return {
+			driver: null
+		};
 	},
 
 	props: ['activeSite'],
 	methods: {
+		getDriver: function getDriver(path) {
+			var _this = this;
+
+			valet_which(path).then(function (r) {
+				_this.driver = r;
+			});
+			return true;
+		},
 		formatedName: function formatedName() {
 			var formated = this.activeSite.site;
 			formated = formated.split('.');
@@ -552,6 +559,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		openSite: function openSite() {
 			console.log('Opening');
 			shell.openExternal('http://' + this.activeSite.site);
+		},
+		openFolder: function openFolder() {
+			console.log('Opening');
+			shell.openItem(this.activeSite.path);
 		}
 	},
 	components: {
@@ -647,7 +658,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {};
 	},
 
-	props: [],
+	props: ['version'],
 	methods: {}
 };
 
@@ -1111,7 +1122,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "site-details"
   }, [_c('list-header', [_vm._v(_vm._s(_vm.formatedName()))]), _vm._v(" "), _c('div', {
     staticClass: "content"
-  }, [_c('div', [_vm._v("Path: " + _vm._s(_vm.activeSite.path))]), _vm._v(" "), _c('div', [_vm._v("Driver: LaravelValetDriver")])]), _vm._v(" "), _c('div', {
+  }, [_c('div', [_vm._v("Path: " + _vm._s(_vm.activeSite.path))]), _vm._v(" "), (_vm.getDriver(_vm.activeSite.path)) ? _c('div', [_vm._v("Driver: " + _vm._s(_vm.driver))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "footer"
   }, [_c('button', {
     staticClass: "btn",
@@ -1119,6 +1130,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.openSite
     }
   }, [_vm._v("Open")]), _vm._v(" "), _c('button', {
+    staticClass: "btn",
+    on: {
+      "click": _vm.openFolder
+    }
+  }, [_vm._v("Reveal")]), _vm._v(" "), _c('button', {
     staticClass: "btn is-green"
   }, [_vm._v("Secure")])])], 1) : _vm._e()
 },staticRenderFns: []}
@@ -1135,21 +1151,21 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "status-bar"
-  }, [_c('div', {
-    staticClass: "section"
-  }, [_c('div', {
-    staticClass: "indicator green"
-  }), _vm._v(" Running\n\t")]), _vm._v(" "), _c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "section"
   }, [_vm._v("\n\t\t15 Sites\n\t")]), _vm._v(" "), _c('div', {
     staticClass: "section"
-  }, [_vm._v("\n\t\tValet v2.4\n\t")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("\n\t\t" + _vm._s(_vm.version) + "\n\t")]), _vm._v(" "), _c('button', {
     staticClass: "section"
   }, [_vm._v("\n\t\tRestart\n\t")])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "section"
+  }, [_c('div', {
+    staticClass: "indicator green"
+  }), _vm._v(" Running\n\t")])
 }]}
 module.exports.render._withStripped = true
 if (false) {
