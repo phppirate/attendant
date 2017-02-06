@@ -4,7 +4,7 @@ Is a Laravel Valet GUI.
 
 ## Requirements
 
-You need to have valet entirly install already.
+You need to have valet entirely install already.
 
 ## Instalation
 
