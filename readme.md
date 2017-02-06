@@ -6,6 +6,19 @@ Is a Laravel Valet GUI.
 
 You need to have valet entirely install already.
 
+## Currently Supports
+
+- Listing Sites
+- Showing Valet Running status
+- Restarting Valet
+- Stoping Valet
+- Starting Valet
+- Link and Unlink Directories
+- Park and Forget Directories
+- Opening sites in browser
+- Revealing sites in finder
+- Opening sites in Sublime Text using the `subl` utility
+
 ## Instalation
 
 Download the most recent version from the "Releases" page and add it to your Applications folder.
