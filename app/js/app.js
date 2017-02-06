@@ -689,12 +689,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		restartValet: function restartValet() {
 			var _this = this;
 
-			this.running = false;
-			this.restarting = true;
-			valet_restart().then(function (r) {
+			this.stopping = true;
+			valet_stop().then(function (r) {
 				console.log(r);
-				_this.restarting = false;
-				_this.getRunning();
+				_this.running = false;
+				_this.stopping = false;
+				_this.starting = true;
+				valet_start().then(function () {
+					_this.starting = false;
+					_this.getRunning();
+				});
 			});
 		},
 		toggleValet: function toggleValet() {

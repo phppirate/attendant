@@ -45,13 +45,17 @@
 		props: ['version', 'siteList'],
 		methods: {
 			restartValet(){
-				this.running = false;
-				this.restarting = true;
-				valet_restart()
+				this.stopping = true;
+				valet_stop()
 					.then(r => {
 						console.log(r);
-						this.restarting = false;
-						this.getRunning();
+						this.running = false;
+						this.stopping = false;
+						this.starting = true;
+						valet_start().then(()=>{
+							this.starting = false;
+							this.getRunning();
+						});
 					});
 			},
 			toggleValet(){
