@@ -15,6 +15,28 @@ function createMainWindow(){
 		height: 580
 	});
 	mainWindow.loadURL('file://' + __dirname + "/app/index.html");
+
+	let template  = [
+		{
+			label: "Attendant",
+			submenu: [
+				{
+					label: 'Toggle Developer Tools',
+					accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+					click (item, focusedWindow) {
+						if (focusedWindow) focusedWindow.webContents.toggleDevTools()
+					}
+				},
+				{
+					role: 'quit'
+				}
+			]
+		}
+	];
+
+	let menu = Menu.buildFromTemplate(template);
+  	Menu.setApplicationMenu(menu);
+
 }
 
 

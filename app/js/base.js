@@ -41,7 +41,9 @@ function reloadBase(){
 
 function valet_version(){
 	return new Promise(function(resolve, reject) {  
-		exec('valet -V', function(error, stdout, stderr) {
+		console.log('Home', process.env.HOME);
+		exec('sudo /usr/local/bin/valet -V', {cwd: process.env.HOME + "/"}, function(error, stdout, stderr) {
+			console.log(error);
 			resolve(stdout);
 		});
 	});
@@ -49,7 +51,8 @@ function valet_version(){
 
 function valet_which(path){
 	return new Promise(function(resolve, reject) {  
-		exec('valet which', {cwd: path}, function(error, stdout, stderr) {
+		exec('sudo /usr/local/bin/valet which', {cwd: path}, function(error, stdout, stderr) {
+			console.log(error);
 			resolve(stdout.split('[')[1].split(']')[0]);
 		});
 	});
@@ -57,7 +60,8 @@ function valet_which(path){
 
 function valet_restart(){
 	return new Promise(function(resolve, reject) {  
-		exec('valet restart', function(error, stdout, stderr) {
+		exec('sudo /usr/local/bin/valet restart', {cwd: process.env.HOME}, function(error, stdout, stderr) {
+			console.log(error);
 			resolve(stdout);
 		});
 	});
