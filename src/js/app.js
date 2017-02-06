@@ -1,11 +1,14 @@
 import Vue from 'vue';
 
+let timeout;
+
 window.app = new Vue({
 	el: "#app",
 	data: {
 		config: {},
 		siteList: [],
-		activeSite: null
+		activeSite: null,
+		dropdownOpen: false,
 	},
 	components: {
 		'status-bar': require('./components/StatusBar'),
@@ -24,6 +27,17 @@ window.app = new Vue({
 		},
 		updateRunning(running){
 			this.running = running;
+		},
+		toggleDropdown(){
+			this.dropdownOpen = !this.dropdownOpen;
+		},
+		hideDropdown(){
+			timeout = setTimeout(() => {
+				this.dropdownOpen = false;
+			}, 500);
+		},
+		hoverDropdown(){
+			clearTimeout(timeout);
 		}
 	},
 	mounted(){

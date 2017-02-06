@@ -85,6 +85,40 @@ function valet_start(){
 	});
 }
 
+function valet_link(path){
+	return new Promise(function(resolve, reject) {  
+		exec('sudo /usr/local/bin/valet link', {cwd: path}, function(error, stdout, stderr) {
+			console.log(error);
+			resolve(stdout);
+		});
+	});
+}
+function valet_unlink(path){
+	return new Promise(function(resolve, reject) {  
+		exec('sudo /usr/local/bin/valet unlink', {cwd: path}, function(error, stdout, stderr) {
+			console.log(error);
+			resolve(stdout);
+		});
+	});
+}
+
+function valet_park(path){
+	return new Promise(function(resolve, reject) {  
+		exec('sudo /usr/local/bin/valet park', {cwd: path}, function(error, stdout, stderr) {
+			console.log(error);
+			resolve(stdout);
+		});
+	});
+}
+function valet_forget(path){
+	return new Promise(function(resolve, reject) {  
+		exec('sudo /usr/local/bin/valet forget', {cwd: path}, function(error, stdout, stderr) {
+			console.log(error);
+			resolve(stdout);
+		});
+	});
+}
+
 function valet_running(){
 	console.log(process.env.HOME + "/.valet/valet.sock");
 	return fs.existsSync(process.env.HOME + "/.valet/valet.sock") ? true : false;

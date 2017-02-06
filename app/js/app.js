@@ -459,12 +459,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 
 
+var timeout = void 0;
+
 window.app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 	el: "#app",
 	data: {
 		config: {},
 		siteList: [],
-		activeSite: null
+		activeSite: null,
+		dropdownOpen: false
 	},
 	components: {
 		'status-bar': __webpack_require__(19),
@@ -483,6 +486,19 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 		},
 		updateRunning: function updateRunning(running) {
 			this.running = running;
+		},
+		toggleDropdown: function toggleDropdown() {
+			this.dropdownOpen = !this.dropdownOpen;
+		},
+		hideDropdown: function hideDropdown() {
+			var _this = this;
+
+			timeout = setTimeout(function () {
+				_this.dropdownOpen = false;
+			}, 500);
+		},
+		hoverDropdown: function hoverDropdown() {
+			clearTimeout(timeout);
 		}
 	},
 	mounted: function mounted() {
@@ -533,6 +549,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
 	data: function data() {
@@ -567,6 +586,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		openFolder: function openFolder() {
 			console.log('Opening');
 			shell.openItem(this.activeSite.path);
+		},
+		isLinked: function isLinked() {
+			return this.activeSite.path.search('.valet/Sites') != -1;
+		},
+		isParked: function isParked() {
+			return !this.isLinked();
+		},
+		forgetOrUnlink: function forgetOrUnlink() {
+			var _this2 = this;
+
+			if (this.isLinked()) {
+				valet_unlink(this.activeSite.path).then(function () {
+					_this2.activeSite = null;
+
+					window.location.reload();
+				});
+			} else {
+				var dirPath = this.activeSite.path.split('/');
+				delete dirPath[dirPath.length - 1];
+				dirPath = dirPath.join('/');
+				if (!confirm('Are you sure you want to do this? This will remove all the sites in this folder from Valet Park.')) return;
+				valet_forget(dirPath).then(function (r) {
+					console.log(r);
+
+					window.location.reload();
+				});
+			}
 		}
 	},
 	components: {
@@ -580,6 +626,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -792,7 +843,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, "\n.site-list{\n\tpadding: 0px 10px;\n\theight: calc(100% - 50px);\n\toverflow-y: scroll;\n}\n", ""]);
+exports.push([module.i, "\n.site-list{\n\tpadding: 0px 10px;\n\theight: calc(100% - 50px);\n\toverflow-y: scroll;\n}\n.small{\n\tfont-size: 15px;\n\ttext-align: center;\n\tpadding-top: 20px;\n\tcolor: #666;\n}\n", ""]);
 
 // exports
 
@@ -1199,7 +1250,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.openFolder
     }
-  }, [_vm._v("Reveal")])])], 1) : _vm._e()
+  }, [_vm._v("Reveal")]), _vm._v(" "), _c('button', {
+    staticClass: "btn is-red",
+    on: {
+      "click": function($event) {
+        _vm.forgetOrUnlink()
+      }
+    }
+  }, [(_vm.isLinked()) ? _c('span', [_vm._v("Un-link")]) : _vm._e(), _vm._v(" "), (_vm.isParked()) ? _c('span', [_vm._v("Forget")]) : _vm._e()])])], 1) : _vm._e()
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -1253,7 +1311,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.siteList) ? _c('div', {
+  return (_vm.siteList && _vm.siteList.length) ? _c('div', {
     staticClass: "site-list"
   }, _vm._l((_vm.siteList), function(item) {
     return _c('item', {
@@ -1264,7 +1322,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v(_vm._s(item.site))])
-  })) : _vm._e()
+  })) : _c('div', {
+    staticClass: "site-list small"
+  }, [_vm._v("\n\tYou do not have any sites yet.\n\t"), _c('br'), _vm._v("\n\tDrag your code directory to park or link a file.\n")])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

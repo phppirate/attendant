@@ -9,7 +9,10 @@
 		<div class="footer">
 			<button class="btn" @click="openSite">Open</button>
 			<button class="btn" @click="openFolder">Reveal</button>
-			<!-- <button class="btn is-green">Secure</button> -->
+			<button class="btn is-red" @click="forgetOrUnlink()">
+				<span v-if="isLinked()">Un-link</span>
+				<span v-if="isParked()">Forget</span>
+			</button>
 		</div>
 	</div>
 </template>
@@ -46,6 +49,33 @@
 			openFolder(){
 				console.log('Opening');
 				shell.openItem(this.activeSite.path);
+			},
+			isLinked(){
+				return this.activeSite.path.search('.valet/Sites') != -1;
+			},
+			isParked(){
+				return !this.isLinked();
+			},
+			forgetOrUnlink(){
+				if(this.isLinked()){
+					valet_unlink(this.activeSite.path)
+						.then(() => {
+							this.activeSite = null;
+							
+							window.location.reload();
+						});
+				} else {
+					let dirPath = this.activeSite.path.split('/');
+					delete dirPath[dirPath.length-1];
+					dirPath = dirPath.join('/');
+					if(!confirm('Are you sure you want to do this? This will remove all the sites in this folder from Valet Park.')) return;
+					valet_forget(dirPath)
+						.then(r => {
+							console.log(r);
+							
+							window.location.reload();
+						});
+				}
 			}
 		},
 		components: {

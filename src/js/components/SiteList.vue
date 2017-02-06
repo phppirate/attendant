@@ -1,10 +1,15 @@
 <template>
-	<div class="site-list" v-if="siteList">
+	<div class="site-list" v-if="siteList && siteList.length">
 		<item
 			v-for="item in siteList"
 			:class="activeSite == item ? 'active' : ''"
 			@click="$emit('activate', item)"
 			>{{ item.site }}</item>
+	</div>
+	<div v-else class="site-list small">
+		You do not have any sites yet.
+		<br>
+		Drag your code directory to park or link a file.
 	</div>
 </template>
 
@@ -29,5 +34,11 @@
 		padding: 0px 10px;
 		height: calc(100% - 50px);
 		overflow-y: scroll; 
+	}
+	.small{
+		font-size: 15px;
+		text-align: center;
+		padding-top: 20px;
+		color: #666;
 	}
 </style>

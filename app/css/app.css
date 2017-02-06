@@ -20,6 +20,9 @@ html, body{
 	flex: 1;
 }
 
+.flex-1{
+	flex: 1;
+}
 
 .btn{
 	border: 1px solid #E9E9E9;
@@ -46,4 +49,30 @@ html, body{
 }
 .btn.is-red:hover{
 	box-shadow: 0px 0px 0px 2px #FB503B;
+}
+
+
+#holder{
+	display: none;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: #fff;
+}
+#holder div{
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#holder div{
+	border: 2px dashed #E9E9E9;
+	font-size: 25px;
+	color: #555;
+}
+
+.activeate-filedropper #holder{
+	display: flex;
 }
