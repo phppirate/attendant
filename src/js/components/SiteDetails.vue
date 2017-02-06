@@ -9,7 +9,7 @@
 		<div class="footer">
 			<button class="btn" @click="openSite">Open</button>
 			<button class="btn" @click="openFolder">Reveal</button>
-			<button class="btn is-green">Secure</button>
+			<!-- <button class="btn is-green">Secure</button> -->
 		</div>
 	</div>
 </template>
