@@ -66,3 +66,8 @@ function valet_restart(){
 		});
 	});
 }
+
+function valet_running(){
+	console.log(process.env.HOME + "/.valet/valet.sock");
+	return fs.existsSync(process.env.HOME + "/.valet/valet.sock") ? true : false;
+}

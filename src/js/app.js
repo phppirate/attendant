@@ -5,7 +5,7 @@ window.app = new Vue({
 	data: {
 		config: {},
 		siteList: [],
-		activeSite: null,
+		activeSite: null
 	},
 	components: {
 		'status-bar': require('./components/StatusBar'),
@@ -21,9 +21,13 @@ window.app = new Vue({
 		loadBase(){
 			this.config = config;
 			this.siteList = sites;
+		},
+		updateRunning(running){
+			this.running = running;
 		}
 	},
 	mounted(){
 		this.$on('reload-base', this.loadBase);
+		this.$on('update-running', this.updateRunning);
 	}
 });

@@ -1,10 +1,15 @@
 <template>
 	<div class="status-bar">
 		<div class="section">
-			<div class="indicator green"></div> Running
+			<div v-if="running">
+				<div class="indicator green"></div> Running
+			</div>
+			<div v-else>
+				<div class="indicator red"></div> Stopped
+			</div>
 		</div>
 		<div class="section">
-			15 Sites
+			{{ siteList.length }} Sites
 		</div>
 		<div class="section">
 			{{ version }}
@@ -20,19 +25,28 @@
 	export default {
 		data(){
 			return {
-				restarting: false
+				restarting: false,
+				running: false
 			};
 		},
-		props: ['version'],
+		props: ['version', 'siteList'],
 		methods: {
 			restartValet(){
+				this.running = false;
 				this.restarting = true;
 				valet_restart()
 					.then(r => {
 						console.log(r);
 						this.restarting = false;
+						this.getRunning();
 					});
+			},
+			getRunning(){
+				this.running = valet_running();
 			}
+		},
+		mounted(){
+			this.getRunning();
 		}
 	}
 </script>
@@ -64,7 +78,13 @@
 		width: 17px;
 		height: 17px;
 		border-radius: 17px;
-		background: #7ED321;
+		background: #666;
 		display: inline-block;
+	}
+	.indicator.green{
+		background: #7ED321;
+	}
+	.indicator.red{
+		background: #f00;
 	}
 </style>

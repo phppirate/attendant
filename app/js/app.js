@@ -480,10 +480,14 @@ window.app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 		loadBase: function loadBase() {
 			this.config = config;
 			this.siteList = sites;
+		},
+		updateRunning: function updateRunning(running) {
+			this.running = running;
 		}
 	},
 	mounted: function mounted() {
 		this.$on('reload-base', this.loadBase);
+		this.$on('update-running', this.updateRunning);
 	}
 });
 
@@ -653,25 +657,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
 	data: function data() {
 		return {
-			restarting: false
+			restarting: false,
+			running: false
 		};
 	},
 
-	props: ['version'],
+	props: ['version', 'siteList'],
 	methods: {
 		restartValet: function restartValet() {
 			var _this = this;
 
+			this.running = false;
 			this.restarting = true;
 			valet_restart().then(function (r) {
 				console.log(r);
 				_this.restarting = false;
+				_this.getRunning();
 			});
+		},
+		getRunning: function getRunning() {
+			this.running = valet_running();
 		}
+	},
+	mounted: function mounted() {
+		this.getRunning();
 	}
 };
 
@@ -726,7 +744,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, "\n.status-bar {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  border-bottom: 1px solid #E9E9E9;\n}\n.status-bar .section {\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background: #fff;\n  border: none;\n  height: 64px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: 0px 20px;\n}\n.status-bar button.section {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  color: #FB503B;\n}\n.status-bar .section:not(:last-child) {\n  border-right: 1px solid #E9E9E9;\n}\n.indicator {\n  margin-right: 10px;\n  width: 17px;\n  height: 17px;\n  border-radius: 17px;\n  background: #7ED321;\n  display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\n.status-bar {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  border-bottom: 1px solid #E9E9E9;\n}\n.status-bar .section {\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background: #fff;\n  border: none;\n  height: 64px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding: 0px 20px;\n}\n.status-bar button.section {\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  color: #FB503B;\n}\n.status-bar .section:not(:last-child) {\n  border-right: 1px solid #E9E9E9;\n}\n.indicator {\n  margin-right: 10px;\n  width: 17px;\n  height: 17px;\n  border-radius: 17px;\n  background: #666;\n  display: inline-block;\n}\n.indicator.green {\n  background: #7ED321;\n}\n.indicator.red {\n  background: #f00;\n}\n", ""]);
 
 // exports
 
@@ -1166,9 +1184,15 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "status-bar"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     staticClass: "section"
-  }, [_vm._v("\n\t\t15 Sites\n\t")]), _vm._v(" "), _c('div', {
+  }, [(_vm.running) ? _c('div', [_c('div', {
+    staticClass: "indicator green"
+  }), _vm._v(" Running\n\t\t")]) : _c('div', [_c('div', {
+    staticClass: "indicator red"
+  }), _vm._v(" Stopped\n\t\t")])]), _vm._v(" "), _c('div', {
+    staticClass: "section"
+  }, [_vm._v("\n\t\t" + _vm._s(_vm.siteList.length) + " Sites\n\t")]), _vm._v(" "), _c('div', {
     staticClass: "section"
   }, [_vm._v("\n\t\t" + _vm._s(_vm.version) + "\n\t")]), _vm._v(" "), _c('button', {
     ref: "restartBtn",
@@ -1177,13 +1201,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.restartValet
     }
   }, [(!_vm.restarting) ? _c('span', [_vm._v("Restart")]) : _c('span', [_vm._v("Restarting")])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "section"
-  }, [_c('div', {
-    staticClass: "indicator green"
-  }), _vm._v(" Running\n\t")])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
