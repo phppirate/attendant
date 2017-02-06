@@ -1,7 +1,8 @@
 <p align="center">
   <img src="icons/title.png">
 </p>
-Is a Laravel Valet GUI.
+
+## A Laravel Valet GUI
 
 ## Requirements
 
