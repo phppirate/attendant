@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+SOURCE="${BASH_SOURCE[0]}"
+
+sudo open /Applications/Attendant.app

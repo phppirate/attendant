@@ -8,7 +8,7 @@ let config, sites, valetVersion;
 console.log(fs);
 
 let basePath = dirName.split('/');
-basePath = "/" + basePath[1] + "/" + basePath[2] + "/.valet";
+basePath = process.env.HOME + "/.valet";
 reloadBase();
 
 // fs.watchFile(basePath + '/config.json', reloadBase);
