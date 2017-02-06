@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icons/title.png">
+  <img src="icons/title.svg">
 </p>
 
 ## A Laravel Valet GUI
