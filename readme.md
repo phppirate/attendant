@@ -5,7 +5,7 @@
 ## A Laravel Valet GUI
 
 <p align="center">
-  <img src="screenshot.png">
+  <img src="shot.png">
 </p>
 
 ## Requirements
