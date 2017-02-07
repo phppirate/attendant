@@ -25,10 +25,11 @@ You need to have valet entirely install already.
 
 Download the most recent version from the "Releases" page and add it to your Applications folder.
 
-Then add this path to you $PATHS variable. 
+Then run this is your terminal
 ```
-/Applications/Attendant.app/Contents/Resources/app
+ln -s /Applications/Attendant.app/Contents/Resources/app/attendant /usr/local/bin
 ```
+Also make sure `/usr/local/bin` is in your $PATH env variable.
 
 ## Caviat
 
