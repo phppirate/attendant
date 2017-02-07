@@ -4,6 +4,10 @@
 
 ## A Laravel Valet GUI
 
+<p align="center">
+  <img src="screenshot.png">
+</p>
+
 ## Requirements
 
 You need to have valet entirely install already.
