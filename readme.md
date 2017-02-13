@@ -27,7 +27,7 @@ You need to have valet entirely install already.
 
 ## Instalation
 
-Download the most recent version from the "Releases" page and add it to your Applications folder.
+Download the most recent version from the ["Releases"](https://github.com/phppirate/attendant/releases) page and add it to your Applications folder.
 
 Then run this is your terminal
 ```
