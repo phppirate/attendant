@@ -35,8 +35,4 @@ ln -s /Applications/Attendant.app/Contents/Resources/app/attendant /usr/local/bi
 ```
 Also make sure `/usr/local/bin` is in your $PATH env variable.
 
-## Caviat
-
-Now here is the only issue. When you want to open Attendant you need to open your terminal and type `attendant`.
-
 That is it!
