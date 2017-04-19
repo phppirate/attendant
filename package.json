@@ -7,9 +7,9 @@
   "author": "Sam Podlogar",
   "license": "MIT",
   "devDependencies": {
-    "electron": "1.4.15",
-    "laravel-mix": "0.6.3",
-    "vue": "2.1.10"
+    "electron": "^1.4.15",
+    "laravel-mix": "^0.10.0",
+    "vue": "^2.1.10"
   },
   "scripts": {
     "pack": "electron-packager . --icon=icons/icon --overwrite",

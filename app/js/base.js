@@ -2,6 +2,7 @@ let dirName = __dirname;
 let eRequire = require;
 let fs = require('fs');
 let shell = require('electron').shell;
+let currentWindow = require('electron').remote.getCurrentWindow();
 let exec = require('child_process').exec;
 let config, sites, valetVersion;
 
@@ -32,7 +33,7 @@ function reloadBase(){
 		});
 
 		config.version = v;
-		
+
 		window.app.$emit ? window.app.$emit('reload-base'): "";
 	});
 
@@ -40,9 +41,9 @@ function reloadBase(){
 
 
 function valet_version(){
-	return new Promise(function(resolve, reject) {  
+	return new Promise(function(resolve, reject) {
 		console.log('Home', process.env.HOME);
-		exec('sudo /usr/local/bin/valet -V', {cwd: process.env.HOME + "/"}, function(error, stdout, stderr) {
+		exec('/usr/local/bin/valet -V', {cwd: process.env.HOME + "/"}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
@@ -50,8 +51,8 @@ function valet_version(){
 }
 
 function valet_which(path){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet which', {cwd: path}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet which', {cwd: path}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout.split('[')[1].split(']')[0]);
 		});
@@ -59,8 +60,8 @@ function valet_which(path){
 }
 
 function valet_restart(){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet restart', {cwd: process.env.HOME}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet restart', {cwd: process.env.HOME}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
@@ -68,8 +69,8 @@ function valet_restart(){
 }
 
 function valet_stop(){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet stop', {cwd: process.env.HOME}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet stop', {cwd: process.env.HOME}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
@@ -77,8 +78,8 @@ function valet_stop(){
 }
 
 function valet_start(){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet start', {cwd: process.env.HOME}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet start', {cwd: process.env.HOME}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
@@ -86,16 +87,16 @@ function valet_start(){
 }
 
 function valet_link(path){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet link', {cwd: path}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet link', {cwd: path}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
 	});
 }
 function valet_unlink(path){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet unlink', {cwd: path}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet unlink', {cwd: path}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
@@ -103,16 +104,16 @@ function valet_unlink(path){
 }
 
 function valet_park(path){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet park', {cwd: path}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet park', {cwd: path}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
 	});
 }
 function valet_forget(path){
-	return new Promise(function(resolve, reject) {  
-		exec('sudo /usr/local/bin/valet forget', {cwd: path}, function(error, stdout, stderr) {
+	return new Promise(function(resolve, reject) {
+		exec('/usr/local/bin/valet forget', {cwd: path}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);
 		});
@@ -125,7 +126,7 @@ function valet_running(){
 }
 
 function open_sublime(path){
-	return new Promise(function(resolve, reject) {  
+	return new Promise(function(resolve, reject) {
 		exec('subl .', {cwd: path}, function(error, stdout, stderr) {
 			console.log(error);
 			resolve(stdout);

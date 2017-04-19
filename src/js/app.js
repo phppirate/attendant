@@ -11,6 +11,7 @@ window.app = new Vue({
 		dropdownOpen: false,
 	},
 	components: {
+		'title-bar': require('./components/TitleBar'),
 		'status-bar': require('./components/StatusBar'),
 		'list-header': require('./components/ListHeader'),
 		'site-list': require('./components/SiteList'),
