@@ -25,7 +25,7 @@ You need to have valet entirely install already.
 - Revealing sites in finder
 - Opening sites in Sublime Text using the `subl` utility
 
-## Instalation
+## Installation
 
 Download the most recent version from the ["Releases"](https://github.com/phppirate/attendant/releases) page and add it to your Applications folder.
 
@@ -35,7 +35,7 @@ ln -s /Applications/Attendant.app/Contents/Resources/app/attendant /usr/local/bi
 ```
 Also make sure `/usr/local/bin` is in your $PATH env variable.
 
-## Caviat
+## Caveat
 
 Now here is the only issue. When you want to open Attendant you need to open your terminal and type `attendant`.
 
