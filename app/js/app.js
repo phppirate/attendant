@@ -547,6 +547,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -556,6 +565,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 	props: ['activeSite'],
+	computed: {
+		remote: function remote() {
+			var keys = [];
+			for (var k in this.activeSite.git) {
+				keys.push(k);
+			}if (!keys.length) return 'None';
+			console.log(keys);
+			return this.activeSite.git[keys.find(function (i) {
+				return i.startsWith('remote');
+			})] ? this.activeSite.git[keys.find(function (i) {
+				return i.startsWith('remote');
+			})].url : false;
+		},
+		currentBranch: function currentBranch() {
+			return this.activeSite.git;
+		},
+		remoteHost: function remoteHost() {
+			console.log(this.remote);
+			var url = this.remote ? this.remote : false;
+			if (!url) return 'None';
+			if (url.includes('gitlab')) return 'Gitlab';
+			if (url.includes('github')) return 'GitHub';
+			return 'Host';
+		}
+	},
 	methods: {
 		getDriver: function getDriver(path) {
 			var _this = this;
@@ -577,6 +611,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		openSite: function openSite() {
 			console.log('Opening');
 			shell.openExternal('http://' + this.activeSite.site);
+		},
+		openRemote: function openRemote() {
+			console.log('Opening');
+			shell.openExternal(this.remote);
 		},
 		openFolder: function openFolder() {
 			console.log('Opening');
@@ -1287,7 +1325,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "site-details"
   }, [_c('list-header', [_vm._v(_vm._s(_vm.formatedName()))]), _vm._v(" "), _c('div', {
     staticClass: "content"
-  }, [_c('div', [_vm._v("Path: " + _vm._s(_vm.activeSite.path))]), _vm._v(" "), (_vm.getDriver(_vm.activeSite.path)) ? _c('div', [_vm._v("Driver: " + _vm._s(_vm.driver))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_c('div', [_vm._v("Path: " + _vm._s(_vm.activeSite.path))]), _vm._v(" "), (_vm.getDriver(_vm.activeSite.path)) ? _c('div', [_vm._v("Driver: " + _vm._s(_vm.driver))]) : _vm._e(), _vm._v(" "), (_vm.activeSite.git) ? _c('div', [_c('div', [_vm._v("Git: " + _vm._s(_vm.activeSite.git ? 'Yes' : 'No'))])]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "footer"
   }, [_c('div', [_c('button', {
     staticClass: "btn",
@@ -1306,7 +1344,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.forgetOrUnlink()
       }
     }
-  }, [(_vm.isLinked()) ? _c('span', [_vm._v("Un-link")]) : _vm._e(), _vm._v(" "), (_vm.isParked()) ? _c('span', [_vm._v("Forget")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [(_vm.isLinked()) ? _c('span', [_vm._v("Un-link")]) : _vm._e(), _vm._v(" "), (_vm.isParked()) ? _c('span', [_vm._v("Forget")]) : _vm._e()])]), _vm._v(" "), (_vm.activeSite.git && _vm.remote) ? _c('div', {
+    staticStyle: {
+      "margin-top": "10px"
+    }
+  }, [_c('button', {
+    staticClass: "btn",
+    on: {
+      "click": function($event) {
+        _vm.openRemote()
+      }
+    }
+  }, [_c('span', [_vm._v("View on " + _vm._s(_vm.remoteHost))])])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticStyle: {
       "margin-top": "10px"
     }

@@ -4,6 +4,7 @@ let fs = require('fs');
 let shell = require('electron').shell;
 let currentWindow = require('electron').remote.getCurrentWindow();
 let exec = require('child_process').exec;
+var parse = require('parse-git-config');
 let config, sites, valetVersion;
 
 console.log(fs);
@@ -23,11 +24,21 @@ function reloadBase(){
 			fs.readdir(path, (err, files) => {
 				files.forEach((file) => {
 					if(file == ".DS_Store") return;
-					let obj = {
-						site: file + "." + config.domain,
-						path: path + "/" + file
-					};
-					sites.push(obj);
+					fs.readdir(path + "/" + file, (error, items) => {
+						let hasGit = items ? items.includes('.git') : false;
+						if(hasGit){
+							hasGit = parse.sync({cwd: path + "/" + file, path: '.git/config'});
+						}
+
+						console.log(hasGit);
+
+						let obj = {
+							site: file + "." + config.domain,
+							path: path + "/" + file,
+							git: hasGit
+						};
+						sites.push(obj);
+					});
 				});
 			});
 		});
