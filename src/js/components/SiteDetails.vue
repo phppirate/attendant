@@ -4,6 +4,9 @@
 		<div class="content">
 			<div>Path: {{ activeSite.path }}</div>
 			<div v-if="getDriver(activeSite.path)">Driver: {{ driver }}</div>
+			<div v-if="activeSite.git">
+				<div>Git: {{ activeSite.git ? 'Yes' : 'No' }}</div>
+			</div>
 		</div>
 
 		<div class="footer">
@@ -15,6 +18,11 @@
 					<span v-if="isParked()">Forget</span>
 				</button>
 			</div>
+			<div style="margin-top: 10px;"  v-if="activeSite.git && remote">
+				<button class="btn" @click="openRemote()">
+					<span>View on {{ remoteHost }}</span>
+				</button>
+			</div>
 			<div style="margin-top: 10px;">
 				<button class="btn is-green" @click="openInSublime">Open Sublime Text</button>
 			</div>
@@ -23,6 +31,7 @@
 </template>
 
 <script>
+
 	export default {
 		data(){
 			return {
@@ -30,6 +39,26 @@
 			};
 		},
 		props: ['activeSite'],
+		computed: {
+			remote(){
+				var keys = [];
+				for(var k in this.activeSite.git) keys.push(k);
+				if(! keys.length) return 'None';
+				console.log(keys);
+				return this.activeSite.git[keys.find(i => i.startsWith('remote'))] ? this.activeSite.git[keys.find(i => i.startsWith('remote'))].url : false;
+			},
+			currentBranch(){
+				return this.activeSite.git;
+			},
+			remoteHost(){
+				console.log(this.remote);
+				let url = this.remote ? this.remote : false;
+				if(! url) return 'None';
+				if(url.includes('gitlab')) return 'Gitlab';
+				if(url.includes('github')) return 'GitHub';
+				return 'Host';
+			}
+		},
 		methods: {
 			getDriver(path){
 				valet_which(path)
@@ -51,6 +80,10 @@
 				console.log('Opening');
 				shell.openExternal('http://' + this.activeSite.site);
 			},
+			openRemote(){
+				console.log('Opening');
+				shell.openExternal(this.remote);
+			},
 			openFolder(){
 				console.log('Opening');
 				shell.openItem(this.activeSite.path);
@@ -66,7 +99,7 @@
 					valet_unlink(this.activeSite.path)
 						.then(() => {
 							this.activeSite = null;
-							
+
 							window.location.reload();
 						});
 				} else {
@@ -77,7 +110,7 @@
 					valet_forget(dirPath)
 						.then(r => {
 							console.log(r);
-							
+
 							window.location.reload();
 						});
 				}

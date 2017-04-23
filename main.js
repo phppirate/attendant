@@ -12,7 +12,9 @@ function init(){
 function createMainWindow(){
 	mainWindow = new BrowserWindow({
 		width: 700,
-		height: 580
+		height: 580,
+		frame: false,
+		// titleBarStyle: 'hidden'
 	});
 	mainWindow.loadURL('file://' + __dirname + "/app/index.html");
 

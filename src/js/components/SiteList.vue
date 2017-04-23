@@ -1,9 +1,10 @@
 <template>
 	<div class="site-list" v-if="siteList && siteList.length">
 		<item
-			v-for="item in siteList"
+			v-for="(item, key) in siteList"
 			:class="activeSite == item ? 'active' : ''"
 			@click="$emit('activate', item)"
+			:key="key"
 			>{{ item.site }}</item>
 	</div>
 	<div v-else class="site-list small">
@@ -33,7 +34,7 @@
 	.site-list{
 		padding: 0px 10px;
 		height: calc(100% - 50px);
-		overflow-y: scroll; 
+		overflow-y: scroll;
 	}
 	.small{
 		font-size: 15px;
