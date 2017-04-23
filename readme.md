@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="icons/title.png">
+  <img src="https://cloud.githubusercontent.com/assets/11269635/23332321/1b25eafa-fb78-11e6-8590-3208fb934d9c.png">
 </p>
 
 ## A Laravel Valet GUI
 
 <p align="center">
-  <img src="shot.png">
+  <img src="https://cloud.githubusercontent.com/assets/11269635/23332313/e01c6894-fb77-11e6-8cbd-67e097d2cf48.png">
 </p>
 
 ## Requirements
