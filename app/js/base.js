@@ -33,7 +33,7 @@ function reloadBase(){
 						console.log(hasGit);
 
 						let obj = {
-							site: file + "." + config.domain,
+							site: file + "." + config.tld,
 							path: path + "/" + file,
 							git: hasGit
 						};
